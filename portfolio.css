@@ -727,7 +727,9 @@ footer {
     }
 
     .nav-menu.responsive {
-        left: 0;
+        left: 30px;
+        right:30px;
+        border-radius: 0 0 20px 20px;
     }
 
     .nav-menu {
@@ -737,11 +739,11 @@ footer {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: rgba(255, 255, 255, 0.7);
+        background: #786262;
         /* backdrop-filter: blur(20px); */
-        width: 100%;
+        /* width: 100%; */
         min-height: 450px;
-        height: 90vh;
+        /* height: 90vh; */
         transition: .3s;
     }
 
