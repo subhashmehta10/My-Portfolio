@@ -572,10 +572,10 @@ h3 {
     padding: 20px 30px;
     width: 90%;
     height: 315px;
-    background: var(--second-color);
+    background: white;
     border-radius: 10px;
     box-shadow: 1px 8px 10px 2px var(--first-shadow-color);
-    /*overflow: hidden;*/
+    overflow: hidden;
     margin-left: 50px;
     
 }
