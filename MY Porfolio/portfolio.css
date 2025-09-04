@@ -601,12 +601,12 @@ h3 {
     background: var(--color-white);
 }
 
-.contact-info:hover.contact-info h2,
+/*.contact-info:hover.contact-info h2,
 .contact-info:hover.contact-info p,
 .contact-info:hover.contact-info i {
     color: #777;
     z-index: 2;
-}
+}*/
 
 /* ----- CONTACT FORM ----- */
 .form-control {
