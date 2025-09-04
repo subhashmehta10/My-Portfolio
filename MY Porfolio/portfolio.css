@@ -597,9 +597,9 @@ h3 {
     font-size: 18px;
 }
 
-.contact-info::after {
+/*.contact-info::after {
     background: var(--color-white);
-}
+}*/
 
 /*.contact-info:hover.contact-info h2,
 .contact-info:hover.contact-info p,
