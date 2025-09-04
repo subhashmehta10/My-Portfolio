@@ -502,10 +502,12 @@ h3 {
         .project-card {
             background-color: var(--color-white);
             border-radius: 10px;
-            overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: left;
+                /* Responsive sizing for cards */
+            flex: 1 1 300px; /* flex-grow, flex-shrink, flex-basis */
+            max-width: 400px;
         }
 
         .project-card:hover {
