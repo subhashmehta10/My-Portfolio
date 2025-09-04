@@ -520,6 +520,7 @@ h3 {
             height: 200px;
             object-fit: cover;
             display: block;
+            border-radius:10px 10px 0 0;
         }
 
         .project-card-content {
