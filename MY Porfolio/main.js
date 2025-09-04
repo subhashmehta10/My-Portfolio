@@ -78,7 +78,7 @@ reset: true
 })
 
 srLeft.reveal('.about-info',{delay: 100})
-srLeft.reveal('.contact-info',{delay: 100})
+srLeft.reveal('.contact-infos',{delay: 100})
 srLeft.reveal('.skill',{delay: 100})
 
 /* -- ABOUT SKILLS & FORM BOX -- */
