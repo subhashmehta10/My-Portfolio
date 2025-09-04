@@ -343,6 +343,11 @@ nav {
 .col {
     display: flex;
     width: 50%;
+    border: 2px solid rgb(190, 181, 181);
+    border-radius: 20px;
+}
+.cols iframe{
+    border-radius: 20px;
 }
 
 /* -- ## --- RESUABLE CSS -- ## -- */
