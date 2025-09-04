@@ -563,7 +563,7 @@ h3 {
         
 
 /* ----- CONTACT BOX ----- */
-.contact-info {
+.contact-infos {
     position: relative;
     display: flex;
     flex-direction: column;
