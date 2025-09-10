@@ -1,6 +1,7 @@
 /* ----- NAVIGATION BAR FUNCTION ----- */
 function myMenuFunction() {
-  var menuBtn = document.getElementById("myNavMenu");
+  const menuBtn = document.getElementById("myNavMenu");
+  if (!menuBtn) return; // Exit if element doesn't exist
 
   if (menuBtn.className === "nav-menu") {
     menuBtn.className += " responsive";
@@ -16,6 +17,7 @@ window.onscroll = function() {
 
 function headerShadow() {
   const navHeader = document.getElementById("header");
+  if (!navHeader) return; // Exit if element doesn't exist
 
   if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
     navHeader.style.boxShadow = "0 1px 6px rgba(0, 0, 0, 0.1)";
@@ -30,13 +32,16 @@ function headerShadow() {
 
 /* ----- TYPING EFFECT ----- */
 // Note: This requires the Typed.js library to be included in your HTML.
-var typingEffect = new Typed(".typedText", {
-  strings: ["Web Designer", "Subhash...", "React Developer"],
-  loop: true,
-  typeSpeed: 100,
-  backSpeed: 80,
-  backDelay: 2000,
-});
+if (document.querySelector(".typedText")) {
+    var typingEffect = new Typed(".typedText", {
+      strings: ["Web Designer", "Subhash...", "React Developer"],
+      loop: true,
+      typeSpeed: 100,
+      backSpeed: 80,
+      backDelay: 2000,
+    });
+}
+
 
 /* ----- ## -- SCROLL REVEAL ANIMATION -- ## ----- */
 // Note: This requires the ScrollReveal library to be included in your HTML.
@@ -48,8 +53,6 @@ const sr = ScrollReveal({
 });
 
 /* -- REVEAL CONFIGURATIONS FOR DIFFERENT SECTIONS -- */
-
-// HOME SECTION
 sr.reveal('.featured-text-card', {});
 sr.reveal('.featured-name', { delay: 100 });
 sr.reveal('.featured-text-info', { delay: 200 });
@@ -57,35 +60,26 @@ sr.reveal('.featured-text-btn', { delay: 200 });
 sr.reveal('.social_icons', { delay: 200 });
 sr.reveal('.featured-image', { delay: 300 });
 sr.reveal('.Pro-cards', { delay: 300 });
-
-// PROJECT BOXES
 sr.reveal('.project-box', { interval: 200 });
-
-// HEADINGS
 sr.reveal('.top-header', {});
 
 /* ----- ## -- SCROLL REVEAL LEFT_RIGHT ANIMATION -- ## ----- */
-
-// Configuration for elements revealing from the left
 const srLeft = ScrollReveal({
   origin: 'left',
   distance: '80px',
   duration: 2000,
   reset: true
 });
-
 srLeft.reveal('.about-info', { delay: 100 });
 srLeft.reveal('.contact-infos', { delay: 100 });
 srLeft.reveal('.skill', { delay: 100 });
 
-// Configuration for elements revealing from the right
 const srRight = ScrollReveal({
   origin: 'right',
   distance: '80px',
   duration: 2000,
   reset: true
 });
-
 srRight.reveal('.skills-box', { delay: 100 });
 srRight.reveal('.companies', { delay: 100 });
 srRight.reveal('.form-control', { delay: 100 });
@@ -100,11 +94,14 @@ function scrollActive() {
     const sectionHeight = current.offsetHeight;
     const sectionTop = current.offsetTop - 50;
     const sectionId = current.getAttribute('id');
+    const link = document.querySelector('.nav-menu a[href*=' + sectionId + ']');
 
-    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-      document.querySelector('.nav-menu a[href*=' + sectionId + ']').classList.add('active-link');
-    } else {
-      document.querySelector('.nav-menu a[href*=' + sectionId + ']').classList.remove('active-link');
+    if (link) { // Check if the link exists before trying to modify it
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        link.classList.add('active-link');
+      } else {
+        link.classList.remove('active-link');
+      }
     }
   });
 }
@@ -113,59 +110,89 @@ window.addEventListener('scroll', scrollActive);
 
 
 /* ----- CONTACT FORM SUBMISSION WITH EMAILJS ----- */
-// Note: This requires the EmailJS library to be included in your HTML.
-document.getElementById("contact-form").addEventListener("submit", function(event) {
-  event.preventDefault(); // Prevent the default form submission
+const contactForm = document.getElementById("contact-form");
 
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const message = document.getElementById("message").value;
+if (contactForm) {
+  contactForm.addEventListener("submit", function(event) {
+    event.preventDefault();
 
-  // IMPORTANT: Replace with your actual EmailJS Service ID and Template ID
-  const serviceID = 'YOUR_SERVICE_ID';
-  const templateID = 'YOUR_TEMPLATE_ID';
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
 
-  const emailParams = {
-    to_email: 'Kumarmehta172@gmail.com',
-    from_name: name,
-    from_email: email,
-    message: message
-  };
+    const serviceID = 'YOUR_SERVICE_ID'; // IMPORTANT: Replace with your actual EmailJS Service ID
+    const templateID = 'YOUR_TEMPLATE_ID'; // IMPORTANT: Replace with your actual EmailJS Template ID
 
-  emailjs.send(serviceID, templateID, emailParams)
-    .then(function(response) {
-      console.log('SUCCESS!', response.status, response.text);
-      alert('Your message has been sent successfully!');
-    }, function(error) {
-      console.log('FAILED...', error);
-      alert('Failed to send the message. Please try again later.');
-    });
-});
+    const emailParams = {
+      to_email: 'Kumarmehta172@gmail.com',
+      from_name: name,
+      from_email: email,
+      message: message
+    };
+
+    emailjs.send(serviceID, templateID, emailParams)
+      .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+        showStatusMessage('Message sent successfully!', 'success');
+      }, function(error) {
+        console.log('FAILED...', error);
+        showStatusMessage('Failed to send message. Please try again.', 'error');
+      });
+  });
+}
+
+function showStatusMessage(message, type) {
+    let messageBox = document.createElement('div');
+    messageBox.textContent = message;
+    messageBox.style.position = 'fixed';
+    messageBox.style.bottom = '20px';
+    messageBox.style.left = '50%';
+    messageBox.style.transform = 'translateX(-50%)';
+    messageBox.style.padding = '10px 20px';
+    messageBox.style.borderRadius = '8px';
+    messageBox.style.color = 'white';
+    messageBox.style.zIndex = '1000';
+    messageBox.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+    messageBox.style.backgroundColor = type === 'success' ? '#28a745' : '#dc3545'; // Green for success, Red for error
+    document.body.appendChild(messageBox);
+    setTimeout(() => {
+        messageBox.style.transition = 'opacity 0.5s ease';
+        messageBox.style.opacity = '0';
+        setTimeout(() => messageBox.remove(), 500);
+    }, 3000);
+}
+
 
 /* ----- SKILL BOXES ANIMATION ----- */
 const skillBoxes = document.querySelectorAll(".skill-box");
-let skillIndex = 0;
+if (skillBoxes.length > 0) { // Check if any skill boxes exist
+  let skillIndex = 0;
 
-function zoomNextSkill() {
-  skillBoxes.forEach(box => box.classList.remove("active"));
-  skillBoxes[skillIndex].classList.add("active");
-  skillIndex = (skillIndex + 1) % skillBoxes.length;
+  function zoomNextSkill() {
+    skillBoxes.forEach(box => box.classList.remove("active"));
+    skillBoxes[skillIndex].classList.add("active");
+    skillIndex = (skillIndex + 1) % skillBoxes.length;
+  }
+
+  setInterval(zoomNextSkill, 2000);
 }
-
-setInterval(zoomNextSkill, 2000);
 
 /* ----- COMPANY LOGOS ANIMATION ----- */
 function animateCompanies() {
   const companyLogos = document.querySelectorAll(".companies-logo");
-  let companyIndex = 0;
+  if (companyLogos.length > 0) { // Check if any company logos exist
+    let companyIndex = 0;
 
-  function zoomNextCompany() {
-    companyLogos.forEach(logo => logo.classList.remove("active"));
-    companyLogos[companyIndex].classList.add("active");
-    companyIndex = (companyIndex + 1) % companyLogos.length;
+    function zoomNextCompany() {
+        companyLogos.forEach(logo => logo.classList.remove("active"));
+        if(companyLogos[companyIndex]) { // Double check the element exists before adding class
+            companyLogos[companyIndex].classList.add("active");
+        }
+        companyIndex = (companyIndex + 1) % companyLogos.length;
+    }
+
+    setInterval(zoomNextCompany, 350);
   }
-  
-  setInterval(zoomNextCompany, 350);
 }
 animateCompanies();
 
@@ -176,17 +203,15 @@ document.addEventListener('mousemove', (e) => {
   particle.className = 'particle';
   document.body.appendChild(particle);
 
-  // Position the particle at the cursor's location
-  particle.style.top = `${e.clientY + window.scrollY}px`; // Add scrollY for correct positioning
+  particle.style.top = `${e.clientY + window.scrollY}px`;
   particle.style.left = `${e.clientX}px`;
 
-  // Animate and remove the particle
   setTimeout(() => {
     particle.style.opacity = 0;
     setTimeout(() => {
       particle.remove();
-    }, 500); // Remove from DOM after fade out
-  }, 300); // Start fading out after 300ms
+    }, 500);
+  }, 300);
 });
 
 
@@ -196,11 +221,12 @@ const chatBox = document.getElementById('chat-box');
 const closeChat = document.getElementById('close-chat');
 
 if (chatToggle && chatBox && closeChat) {
-    chatToggle.addEventListener('click', () => {
-        chatBox.classList.toggle('visible');
-    });
-    
-    closeChat.addEventListener('click', () => {
-        chatBox.classList.remove('visible');
-    });
+  chatToggle.addEventListener('click', () => {
+    chatBox.classList.toggle('visible');
+  });
+
+  closeChat.addEventListener('click', () => {
+    chatBox.classList.remove('visible');
+  });
 }
+
