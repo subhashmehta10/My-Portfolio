@@ -501,7 +501,7 @@ h3 {
 
         .project-card {
             background-color: var(--color-white);
-            border-radius: 10px;
+            border-radius: 10px 10px 0 0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: left;
